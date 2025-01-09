@@ -32,19 +32,33 @@ function createTaskElement(task) {
   const buttonContainer = document.createElement("div");
 
   listItem.textContent = task;
-  doneButton.textContent = String.fromCodePoint(0x2714);
-  doneButton.id = "done";
-  deleteButton.textContent = String.fromCodePoint(0x2716);
-  deleteButton.id = "delete";
-  buttonContainer.appendChild(doneButton);
-  buttonContainer.appendChild(deleteButton);
-  listItem.appendChild(buttonContainer);
+
+  function showButtons () {
+    doneButton.textContent = String.fromCodePoint(0x2714);
+    doneButton.id = "done";
+    deleteButton.textContent = String.fromCodePoint(0x2716);
+    deleteButton.id = "delete";
+    buttonContainer.appendChild(doneButton);
+    buttonContainer.appendChild(deleteButton);
+    listItem.appendChild(buttonContainer);
+  }
+
   list.appendChild(listItem);
+
+  showButtons();
 
   deleteButton.addEventListener("click", function () {
     list.removeChild(listItem);
     saveTasks();
   });
+
+  doneButton.addEventListener("click", function () {
+    listItem.innerHTML = "<s>" + listItem.textContent.slice(0,-2) + "</s>";
+    listItem.style.backgroundColor = "gray";
+    showButtons();
+    saveTasks();
+  });
+
 }
 
 function saveTasks() {
@@ -52,7 +66,7 @@ function saveTasks() {
 
   list.querySelectorAll("li").forEach(function (item) {
     const taskText = item.childNodes[0].textContent;
-    tasks.push(taskText.trim());
+    tasks.push(taskText);
   });
 
   localStorage.setItem("tasks", JSON.stringify(tasks));
