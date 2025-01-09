@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-DO LIST</title>
+    <script rel="stylesheet" src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    input{
+        border: 1px solid black;
+    }
+</style>
+<script src="script.js" defer></script>
+<body class="h-full flex justify-center items-center font-sans bg-blue-950">
+    <div id="container" class="w-full sm:w-full md:w-3/4 lg:w-[62.5%] xl:w-1/2 2xl:w-[37.5%] h-screen justify-items-center bg-white">
+        <br><h1>Mis Tareas</h1><br>
+        <input id="input" type="text"><br><br>
+        <button  onclick="newElement()" id="crear" class="bg-blue-800 text-white w-full">Crear Tarea</button>
+        <ul id="list" class="block">
+        </ul>
+    </div>
+</body>
+</html>
