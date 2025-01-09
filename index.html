@@ -1,23 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>TO-DO LIST</title>
-    <script rel="stylesheet" src="https://cdn.tailwindcss.com"></script>
 </head>
-<style>
-    input{
-        border: 1px solid black;
-    }
-</style>
 <script src="script.js" defer></script>
-<body class="h-full flex justify-center items-center font-sans bg-blue-950">
-    <div id="container" class="w-full sm:w-full md:w-3/4 lg:w-[62.5%] xl:w-1/2 2xl:w-[37.5%] h-screen justify-items-center bg-white">
-        <br><h1>Mis Tareas</h1><br>
-        <input id="input" type="text"><br><br>
-        <button  onclick="newElement()" id="crear" class="bg-blue-800 text-white w-full">Crear Tarea</button>
-        <ul id="list" class="block">
+<body>
+    <div id="container">
+        <h1>Mis Tareas</h1>
+        <input id="input" type="text" placeholder="Agregue una descripción..." autofocus>
+        <br><br>
+        <button  id="add">Crear Tarea</button>
+        <ul id="list">
         </ul>
     </div>
 </body>

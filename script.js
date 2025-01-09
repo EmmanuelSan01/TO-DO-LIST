@@ -1,64 +1,65 @@
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
-}
+const add = document.getElementById("add");
+const input = document.getElementById("input");
+const list = document.getElementById("list");
 
-var done = document.getElementsByClassName("done");
-var j;
-for (j = 0; j < done.length; j++) {
-  done[j].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
-}
+loadTasks();
 
-function newElement() {
-    var li = document.createElement("li");
-    var inputValue = document.getElementById("input").value;
-    var t = document.createTextNode(inputValue);
-    li.appendChild(t);
-    if (inputValue === "") {
-        alert("Escriba la descripción de una tarea");
-    } else {
-        document.getElementById("list").appendChild(li);
-    }
-    document.getElementById("input").value = "";
-
-    var span = document.createElement("SPAN");
-    var txt = document.createTextNode("  ✓  ");
-    span.className = "done";
-    span.appendChild(txt);
-    li.appendChild(span);
-
-    var span = document.createElement("SPAN");
-    var txt = document.createTextNode("  ×  ");
-    span.className = "close";
-    span.appendChild(txt);
-    li.appendChild(span);
-    
-    for (i = 0; i < close.length; i++) {
-        close[i].onclick = function() {
-            var div = this.parentElement;
-            div.style.display = "none";
-        }
-    }
-
-    for (j = 0; j < done.length; j++) {
-    done[j].onclick = function() {
-        var div = this.parentElement;
-        div.style.background = "red";
-        div.style.color = "white";
-    }
-}
-}
-var input = document.getElementById("input");
 input.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      document.getElementById("crear").click();
-    }
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("add").click();
+  }
 });
+
+function addTask() {
+  const task = input.value.trim();
+
+  if (task) {
+    createTaskElement(task);
+    input.value = "";
+    saveTasks();
+  } else {
+    alert("Agregue una descripción");
+  }
+}
+
+add.addEventListener("click", addTask);
+
+function createTaskElement(task) {
+  const listItem = document.createElement("li");
+  const deleteButton = document.createElement("button");
+  const doneButton = document.createElement("button");
+  const buttonContainer = document.createElement("div");
+
+  listItem.textContent = task;
+  doneButton.textContent = String.fromCodePoint(0x2714);
+  doneButton.id = "done";
+  deleteButton.textContent = String.fromCodePoint(0x2716);
+  deleteButton.id = "delete";
+  buttonContainer.appendChild(doneButton);
+  buttonContainer.appendChild(deleteButton);
+  listItem.appendChild(buttonContainer);
+  list.appendChild(listItem);
+
+  deleteButton.addEventListener("click", function () {
+    list.removeChild(listItem);
+    saveTasks();
+  });
+}
+
+function saveTasks() {
+  let tasks = [];
+
+  list.querySelectorAll("li").forEach(function (item) {
+    const taskText = item.childNodes[0].textContent;
+    tasks.push(taskText.trim());
+  });
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+  tasks.forEach(createTaskElement);
+}
