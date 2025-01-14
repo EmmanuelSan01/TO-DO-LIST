@@ -28,18 +28,27 @@ li div {
   gap: 0.5em;
 }
 
-#done, #delete {
+.button {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 2.4em;
-  background-color: tomato;
+  background-color: yellowgreen;
   color: white;
   border: none;
   border-radius: 0.5em;
   cursor: pointer;
 }
 
-#done {
-  background-color: yellowgreen;
+#delete {
+  background-color: tomato;
+}
+
+.doneText {
+  text-decoration: line-through;
+}
+
+
+.doneColor {
+  background-color: gray;
 }
